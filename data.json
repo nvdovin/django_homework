@@ -1,0 +1,65 @@
+[
+  {
+    "model": "catalog.product",
+    "pk": 7,
+    "fields": {
+      "title": "Сосиски",
+      "description": "Еда настоящих мужчин",
+      "image": "",
+      "category": "Мясопродукты",
+      "price": 150.0,
+      "creations_date": "2023-07-13",
+      "last_change_date": null
+    }
+  },
+  {
+    "model": "catalog.product",
+    "pk": 8,
+    "fields": {
+      "title": "Колбасы",
+      "description": "Еда настоящих детей",
+      "image": "",
+      "category": "Мясопродукты",
+      "price": 300.0,
+      "creations_date": "2023-07-13",
+      "last_change_date": null
+    }
+  },
+  {
+    "model": "catalog.product",
+    "pk": 9,
+    "fields": {
+      "title": "Курица",
+      "description": "Еда настоящих женщин",
+      "image": "",
+      "category": "Мясопродукты",
+      "price": 450.0,
+      "creations_date": "2023-07-13",
+      "last_change_date": null
+    }
+  },
+  {
+    "model": "catalog.category",
+    "pk": 35,
+    "fields": {
+      "title": "Еда",
+      "description": "Еда для тех, кто любит есть"
+    }
+  },
+  {
+    "model": "catalog.category",
+    "pk": 36,
+    "fields": {
+      "title": "Напитки",
+      "description": "Напитки для тех, кто любит пить"
+    }
+  },
+  {
+    "model": "catalog.category",
+    "pk": 37,
+    "fields": {
+      "title": "Не знаю, что?",
+      "description": "Что это вообще?!"
+    }
+  }
+]
