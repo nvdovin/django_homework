@@ -1,28 +1,6 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Skystore</title>
-    <link href="/bootstrap/bootstrap.min.css" rel="stylesheet">
-</head>
-<body>
-<div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom box-shadow">
-    <h5 class="my-0 mr-md-auto font-weight-normal">Skystore</h5>
-    <nav class="ms-5">
-        <button type="button" class="btn btn-sm btn-outline-secondary"><a
-                href="/catalog/templates/catalog/home.html" class="text-black">Каталог</a>
-        </button>
-        <button type="button" class="btn btn-sm btn-outline-secondary"><a
-                href="/catalog/templates/catalog/contacts.html" class="text-black">Контакты</a>
-        </button>
-    </nav>
-</div>
+{% extends 'catalog/base.html' %}
 
-<div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
-    <h1 class="display-4">Контакты</h1>
-</div>
-
+{% block content %}
 <div class="container">
     <div class="row text-start">
         <div class="col-lg-9 col-md-6 col-sm-12">
@@ -95,7 +73,4 @@
     </footer>
 </div>
 
-<script src="/bootstrap/bootstrap.min.js"></script>
-<script src="/bootstrap/bootstrap.min.js"></script>
-</body>
-</html>
+{% endblock %}
