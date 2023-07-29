@@ -1,20 +1,32 @@
 {% extends 'catalog/base.html' %}
 
 {% block content %}
-    <div class="container">
-        <div class="row text-start">
-            <div class="col-lg-9 col-md-6 col-sm-12">
-                <div class="card mb-4 box-shadow">
-                    <div class="card-body px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
-                        <img src="{% media 'atyashevo.jpg' %}">
+    {% for object in object_list %}
+        <div class="container">
+            <div class="row text-start">
+                <div class="col-lg-9 col-md-6 col-sm-12">
+                    <div class="card mb-4 box-shadow">
+                        <div class="card-body px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+                            {% load mediapath %}
+                            <div class="d-flex flex-column h-100 p-5 pb-3 text-shadow-1">
+                                <h3 class="card-text"> {{ object.title|title|truncatechars:100 }} </h3>
+                                <ul class="d-flex list-unstyled mt-auto">
+                                    <li class="me-auto">
+                                        <img src="{% mediapath object.image %}" width="100%" height="170"
+                                             alt="Иллюстрация"
+                                             class="rounded-circle border border-white">
+                                    </li>
+                            </div>
+                            <h3 class="card-text"> Цена {{ object.price|title|truncatechars:100 }} Р. </h3>
+                        </div>
                     </div>
                 </div>
             </div>
+
+            <footer class="pt-4 my-md-5 pt-md-5 border-top">
+
+            </footer>
         </div>
 
-        <footer class="pt-4 my-md-5 pt-md-5 border-top">
-
-        </footer>
-    </div>
-
+    {% endfor %}
 {% endblock %}
