@@ -25,9 +25,12 @@ def contacts(request):
     return render(request, "catalog/contacts.html", context)
 
 
-def product1(request):
-    products_list = Product.objects.all()
+def product1(request, pk):
+    products_list = Product.objects.filter(id=pk)
+
+    product_item = Product.objects.get(pk=pk)
     context = {
-        "object_list": products_list
+        "object_list": products_list,
+        "title": f"Здесь вы найдете лучшие {product_item} в Мордовии!"
     }
     return render(request, "catalog/product1.html", context)
