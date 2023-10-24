@@ -1,7 +1,7 @@
 from typing import Any
 from django.forms.models import BaseModelForm
 from django.http import HttpRequest, HttpResponse
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404, render
 from catalog.models import Product
 from django.views import generic as g
 
@@ -42,16 +42,13 @@ class ContactsCreateView(g.CreateView):
 
 
 
-class ProductCardTemplateView(g.TemplateView):
-    pass
+class ProductCardView(g.DetailView):
+    model = Product
+    template_name = "catalog/product1.html"
+    context_object_name = "product_card"
 
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        queryset.filter(pk=self.kwargs["pk"])
+        return queryset
 
-def product1(request, pk):
-    products_list = Product.objects.filter(id=pk)
-
-    product_item = Product.objects.get(pk=pk)
-    context = {
-        "object_list": products_list,
-        "title": f"Здесь вы найдете лучшие {product_item} в Мордовии!"
-    }
-    return render(request, "catalog/product1.html", context)
