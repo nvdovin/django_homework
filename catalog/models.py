@@ -1,5 +1,4 @@
 from django.db import models
-from django.db.models import Model
 
 NULLABLE = {
     "null": True,
@@ -9,7 +8,7 @@ NULLABLE = {
 
 # Create your models here.
 
-class Product(Model):
+class Product(models.Model):
     title = models.CharField(max_length=20, verbose_name="Наименование")
     description = models.TextField(verbose_name="Описание")
     image = models.ImageField(upload_to="catalog/media/", **NULLABLE, verbose_name="Изображние")
@@ -26,7 +25,7 @@ class Product(Model):
         verbose_name_plural = "Продукты"
 
 
-class Category(Model):
+class Category(models.Model):
     title = models.CharField(max_length=20, verbose_name="Наименование")
     description = models.TextField(verbose_name="Описание")
 

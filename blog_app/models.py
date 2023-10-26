@@ -1,0 +1,18 @@
+from django.db import models
+
+# Create your models here.
+class Blog(models.Model):
+    title = models.CharField(max_length=50, verbose_name="Заголовок")
+    slug = models.CharField(max_length=30, verbose_name="Slug")
+    content = models.CharField(max_length=50, verbose_name="Содержимое")
+    preview = models.ImageField(verbose_name="Превью", upload_to="catalog/media")
+    creation_date = models.DateField(auto_now=True, verbose_name="Дата сощдания")
+    is_published = models.BooleanField(default=True, verbose_name="Статус публикации")
+    views_counter = models.IntegerField(verbose_name="Счетчик просморов")
+    
+    def __str__(self) -> str:
+        return f"Запись {self.title} с количеством просмотров - {self.views_counter}"
+    
+    class Meta:
+        verbose_name = "Блог для сайта"
+        verbose_name_plural = "Блоги для сайта"
