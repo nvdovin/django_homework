@@ -1,0 +1,26 @@
+{% extends 'catalog/base.html' %}
+
+{% block content %}
+<div class="container">
+    <form method="post" enctype="multipart/form-data">
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary" enp>Добавить запись</button>
+        {% csrf_token %}
+    </form>
+
+    <!-- <div class="mb-5">
+        <label for="exampleFormControlInput1" class="form-label">Название</label>
+        <input class="form-control form-control-lg" type="text"
+            placeholder="Название" aria-label=".form-control-lg example">
+    </div>
+    <div class="mb-3">
+        <label for="exampleFormControlTextarea1" class="form-label">Описание</label>
+        <textarea class="form-control" placeholder="Описание" id="exampleFormControlTextarea1" rows="3"></textarea>
+    </div>
+    <div class="mb-3">
+        <label for="formFile" class="form-label">Выберите превью</label>
+        <input class="form-control" type="file" id="formFile">
+    </div> -->
+</div>
+
+{% endblock content %}
