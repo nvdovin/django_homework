@@ -78,6 +78,12 @@ WSGI_APPLICATION = 'config.wsgi.application'
 
 DATABASES = {
     'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': 'my_market',
+        "HOST": "localhost",
+        "PORT": 5432
+    },
+    'linux': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'my_market',
         'USER': 'postgres',
