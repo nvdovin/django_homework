@@ -1,4 +1,5 @@
 idea
 venv
 env
+.vscode
 .vscode/settings.json

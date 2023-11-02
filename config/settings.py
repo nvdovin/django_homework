@@ -77,13 +77,13 @@ WSGI_APPLICATION = 'config.wsgi.application'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
 DATABASES = {
-    'default': {
+    'win': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': 'my_market',
         "HOST": "localhost",
         "PORT": 5432
     },
-    'linux': {
+    'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'my_market',
         'USER': 'postgres',

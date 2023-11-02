@@ -10,6 +10,6 @@ urlpatterns = [
     path('create/', v.PostCreateView.as_view(), name='create'),
     path('<int:pk>/view/', v.PostDetailView.as_view() , name='view'),
     path('<int:pk>/edit/', v.PostUpdateView.as_view(), name='edit'),
-    # path('delete/', ... , name='delete/'),
+    path('<int:pk>/delete/', v.PostDeleteView.as_view() , name='delete'),
 
 ]
