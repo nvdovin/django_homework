@@ -4,7 +4,12 @@
 <div class="container">
     <form method="post" enctype="multipart/form-data">
         {{ form.as_p }}
-        <button type="submit" class="btn btn-primary" enp>Добавить запись</button>
+        
+        {% if editing %}
+            <button type="submit" class="btn btn-primary" enp>Изменить запись</button>
+        {% else %}
+            <button type="submit" class="btn btn-primary" enp>Добавить запись</button>
+        {% endif %}
         {% csrf_token %}
     </form>
 

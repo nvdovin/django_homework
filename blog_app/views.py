@@ -11,6 +11,7 @@ from my_util_files.transcrypter import transcription
 class PostsListView(g.ListView):
     model = models.Blog
     template_name = 'blog_app/posts_list.html'
+
     def get_queryset(self):
         queryset = super().get_queryset()
         queryset = queryset.filter(is_published=True).order_by('views_counter').reverse()
@@ -25,6 +26,7 @@ class PostCreateView(g.CreateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        context["editing"] = False
         return context
 
     def form_valid(self, form):
@@ -56,6 +58,11 @@ class PostUpdateView(g.UpdateView):
             new_post.slug = transcription(new_post.title)
             new_post.save()
         return super().form_valid(form)
+    
+    def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
+        context = super().get_context_data(**kwargs)
+        context["editing"] = True
+        return context
 
 
 class PostDetailView(g.DeleteView):

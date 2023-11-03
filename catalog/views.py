@@ -1,7 +1,5 @@
 from typing import Any
-from django.forms.models import BaseModelForm
 from django.http import HttpRequest, HttpResponse
-from django.shortcuts import get_object_or_404, render
 from catalog.models import Product
 from django.views import generic as g
 
