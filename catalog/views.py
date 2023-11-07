@@ -1,5 +1,6 @@
 from typing import Any
 from django.http import HttpRequest, HttpResponse
+from catalog.forms import CreateProduct
 from catalog.models import Product
 from django.views import generic as g
 
@@ -50,3 +51,8 @@ class ProductCardView(g.DetailView):
         queryset.filter(pk=self.kwargs["pk"])
         return queryset
 
+
+class ProductCreateView(g.CreateView):
+    model = Product
+    template_name = "catalog/product_create.html"
+    form_class = CreateProduct
