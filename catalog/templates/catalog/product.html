@@ -1,0 +1,57 @@
+{% extends 'catalog/base.html' %}
+
+{% block content %}
+<div class="col-6">
+    <div class="text text-start">
+        <a href="{% url 'catalog:home' %}" type="button" class="btn btn-info">Назад</a>
+    </div>
+</div>
+<div class="container">
+    <div class="row text-start">
+        <div class="col-lg-9 col-md-6 col-sm-12">
+            <div class="card mb-4 box-shadow">
+                <div
+                    class="card-body px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+                    {% load mediapath %}
+                    {% load paragrapher %}
+                    <div class="d-flex flex-column h-100 p-5 pb-3 text-shadow-1">
+                        <h3 class="card-text"> {{ product_card.title|title }}
+                        </h3>
+                        <ul class="d-flex list-unstyled mt-auto">
+                            <li class="me-auto">
+                                <img src="{% mediapath product_card.image %}"
+                                    width="100%" height="170"
+                                    alt="Иллюстрация"
+                                    class="border border-white">
+                            </li>
+                        </div>
+                        <ul class="d-flex list-unstyled mt-auto">
+                            <li class="me-auto">
+                                {% autoescape off %}
+                                    {{ product_card.description|paragrapher }}
+                                {% endautoescape %}
+                            </li>
+                        </ul>
+                        <div class="col">
+                            <h3 class="card-text"> Цена {{ product_card.price }} Р. </h3>
+                        </div>
+                        
+                        {% if product_card.version_of_product %}
+                        <div class="col">
+                            <h3 class="card-text"> Версия {{ product_card.version_of_product }}. </h3>
+                        </div>
+                        {% else %}
+
+                        {% endif %}
+                    
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer class="pt-4 my-md-5 pt-md-5 border-top">
+
+        </footer>
+    </div>
+
+    {% endblock %}

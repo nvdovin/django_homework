@@ -2,7 +2,7 @@
 
 {% block content %}
 <div align="center">
-    <div class="mb-3">
+    <div class="m-4">
         <a href="{% url 'catalog:create_product' %}" type="button"
             class="btn btn-outline-success">Создать продукт</a>
     </div>
@@ -23,7 +23,12 @@
                     <button class="btn btn-sm btn-outline-secondary"
                         type="button"><a
                             class="text-black"
-                            href="{% url 'catalog:product1' object.pk %}">Купить!</a>
+                            href="{% url 'catalog:product' object.pk %}">Купить!</a>
+                    </button>
+                    <button class="btn btn-sm btn-outline-secondary"
+                        type="button"><a
+                            class="text-black"
+                            href="{% url 'catalog:update_product' object.pk %}">Изменить!</a>
                     </button>
                 </a>
             </div>
