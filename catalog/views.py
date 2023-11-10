@@ -1,7 +1,8 @@
 from typing import Any
 from django.http import HttpRequest, HttpResponse
+from django.urls import reverse_lazy
 from catalog.forms import CreateProduct
-from catalog.models import Product
+from catalog.models import Product, Version
 from django.views import generic as g
 
 
@@ -43,8 +44,16 @@ class ContactsCreateView(g.CreateView):
 
 class ProductCardView(g.DetailView):
     model = Product
-    template_name = "catalog/product1.html"
+    template_name = "catalog/product.html"
     context_object_name = "product_card"
+
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        version = Version.objects.all()
+        context['version'] = version
+        return context
+    
 
     def get_queryset(self):
         queryset = super().get_queryset()
@@ -56,3 +65,22 @@ class ProductCreateView(g.CreateView):
     model = Product
     template_name = "catalog/product_create.html"
     form_class = CreateProduct
+    success_url = reverse_lazy('catalog:home')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['is_edit'] = False
+        return context
+
+
+class ProductUpdateView(g.UpdateView):
+    model = Product
+    template_name = "catalog/product_create.html"
+    form_class = CreateProduct
+    success_url = reverse_lazy('catalog:home')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['is_edit'] = True
+        return context
+    

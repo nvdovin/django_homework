@@ -1,13 +1,21 @@
 {% extends 'catalog/base.html' %}
 
 {% block content %}
-<div class="col-12 md-3">
+<div class="col-6">
+    <div class="text text-start">
+        <a href="{% url 'catalog:home' %}" type="button" class="btn btn-info">Назад</a>
+    </div>
+</div>
+<div align="center" class="md-3">
     <div align="center" class="md-3">
         <div class="card">
-            <form action method="post">
+            <form action method="post" enctype="multipart/form-data">
                 {{ form.as_p }}
                 {% csrf_token %}
-                <button class="btn btl-success" type="submit">Создать</button>
+                <div class="m-4">
+                    <button href="{% url 'catalog:create_product' %}"
+                        class="btn btn-outline-success md-5" type="submit">Создать</button>
+                </div>
             </form>
         </div>
     </div>
