@@ -35,9 +35,15 @@
                         <div class="col">
                             <h3 class="card-text"> Цена {{ product_card.price }} Р. </h3>
                         </div>
+                        
+                        {% if product_card.version_of_product %}
                         <div class="col">
-                            <h3 class="card-text"> Версия {{ product_card.version.version_number }}. </h3>
+                            <h3 class="card-text"> Версия {{ product_card.version_of_product }}. </h3>
                         </div>
+                        {% else %}
+
+                        {% endif %}
+                    
                     </div>
                 </div>
             </div>

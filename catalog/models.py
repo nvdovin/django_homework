@@ -16,7 +16,7 @@ class Product(models.Model):
     price = models.FloatField(verbose_name="Цена за товар", **NULLABLE)
     creations_date = models.DateField(verbose_name="Дата создания", **NULLABLE)
     last_change_date = models.DateField(**NULLABLE, verbose_name="Дата последнего изменения")
-    version_of_product = models.ForeignKey(to='Version', to_field="version_number", blank=True, null=True, on_delete=models.SET_NULL)
+    version_of_product = models.ForeignKey(to='Version', blank=True, null=True, on_delete=models.SET_NULL)
 
     def __str__(self):
         return f"{self.title} {self.category} {self.price}"
@@ -39,7 +39,7 @@ class Category(models.Model):
 
 
 class Version(models.Model):
-    product_name = models.ForeignKey(to='Product', to_field='title', on_delete=models.CASCADE)
+    product_name = models.ForeignKey(to='Product', to_field='title', on_delete=models.DO_NOTHING)
     version_number = models.FloatField(unique=True, verbose_name="Номер версии")
     version_title = models.CharField(max_length=100, verbose_name="Название версии")
     is_active_version = models.BooleanField(default=True)
