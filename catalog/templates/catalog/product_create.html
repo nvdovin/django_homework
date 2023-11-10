@@ -14,12 +14,12 @@
                 {% csrf_token %}
                 <div class="m-4">
 
-                    {% if objects_list.is_edit %}
-                    <button href="{% url 'catalog:create_product' %}"
-                        class="btn btn-outline-success md-5" type="submit">Создать</button>
-                    {% else %}
+                    {% if is_edit %}
                     <button href="{% url 'catalog:create_product' %}"
                         class="btn btn-outline-success md-5" type="submit">Именить</button>
+                    {% else %}
+                    <button href="{% url 'catalog:create_product' %}"
+                        class="btn btn-outline-success md-5" type="submit">Создать</button>
                     {% endif %}
 
                 </div>

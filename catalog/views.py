@@ -66,6 +66,7 @@ class ProductCreateView(g.CreateView):
     template_name = "catalog/product_create.html"
     form_class = CreateProduct
     success_url = reverse_lazy('catalog:home')
+    context_object_name = "data"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -78,6 +79,7 @@ class ProductUpdateView(g.UpdateView):
     template_name = "catalog/product_create.html"
     form_class = CreateProduct
     success_url = reverse_lazy('catalog:home')
+    context_object_name = "data"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
