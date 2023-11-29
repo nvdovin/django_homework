@@ -1,0 +1,23 @@
+{% extends 'catalog/base.html' %}
+
+{% block content %}
+<div class="col-3 md-3">
+    <div class="text text-start">
+        <a href="{% url 'catalog:home' %}" type="button" class="btn btn-info">Назад</a>
+    </div>
+</div>
+
+<div style="position: relative; left: auto;">
+    {% for card in querry %}
+    <div class="col-6 text-center">
+        <div class="card">
+            <p>                
+                <h3>{{ card.version_title }}</h3>
+                <br>{{ card.product_name }}
+                <br>{{ card.is_active_version }}
+            </p>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock content %}

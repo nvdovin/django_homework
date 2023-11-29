@@ -10,12 +10,7 @@ from django.views import generic as g
 
 class HomeListView(g.ListView):
     model = Product
-    template_name = "catalog/home.html"
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        return context
-    
+    template_name = "catalog/home.html"    
 
 
 class ContactsCreateView(g.CreateView):
@@ -66,7 +61,6 @@ class ProductCreateView(g.CreateView):
     template_name = "catalog/product_create.html"
     form_class = CreateProduct
     success_url = reverse_lazy('catalog:home')
-    context_object_name = "data"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -79,10 +73,20 @@ class ProductUpdateView(g.UpdateView):
     template_name = "catalog/product_create.html"
     form_class = CreateProduct
     success_url = reverse_lazy('catalog:home')
-    context_object_name = "data"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['is_edit'] = True
         return context
-    
+
+
+class ActiveVersionsListView(g.ListView):
+    model = Version
+    template_name = 'catalog/versions_list_view.html'
+    context_object_name = 'querry'
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        queryset = queryset.filter(is_active_version = True)
+        print(queryset)
+        return queryset
