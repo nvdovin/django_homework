@@ -42,20 +42,20 @@
     <div class="container text-center">
         <div class="row row row-cols-1">
             {% for card in object_list %}
-            <div class="col">
-                <div class="card" style="width: 20rem;">
-                    <img src="{% mediapath card.preview %}" class="card-img-top"
+            <div class="col md-3 mb-3">
+                <div class="card" style="width: 20rem; height: 30rem;">
+                    <img src="{% mediapath card.preview %}" style="height: 250px; width: auto;" class="card-img-top"
                         alt="Превью">
                     <div class="card-body">
                         <h5 class="card-title">{{ card.title }}</h5>
                         <p class="card-text">{{ card.content|truncatechars:60 }}</p>
-                        <a href="{% url 'blog_app:view' card.pk %}"
-                            class="btn btn-primary">Читать</a>
-                        <a href="{% url 'blog_app:edit' card.pk %}"
-                            class="btn btn-primary">Изменить</a>
-                        <a href="{% url 'blog_app:delete' card.pk %}"
-                            class="btn btn-danger">Удалить</a>
+                        
                     </div>
+                    <div style="position: relative; bottom: 10px;">
+                            <a href="{% url 'blog_app:view' card.pk %}" class="btn btn-primary">Читать</a>
+                            <a href="{% url 'blog_app:edit' card.pk %}"class="btn btn-primary">Изменить</a>
+                            <a href="{% url 'blog_app:delete' card.pk %}"class="btn btn-danger">Удалить</a>
+                        </div>
                 </div>
             </div>
             {% endfor %}

@@ -3,7 +3,10 @@ from django.db import models
 from django.shortcuts import render
 from django.urls import reverse, reverse_lazy
 from django.views import generic as g
+
 from blog_app import models
+from blog_app import forms as f
+
 from my_util_files.transcrypter import transcription
 
 # Create your views here.
@@ -21,7 +24,7 @@ class PostsListView(g.ListView):
 class PostCreateView(g.CreateView):
     model = models.Blog
     template_name = 'blog_app/post_create.html'
-    fields = ('title', 'content', 'preview')
+    form_class = f.BlogCreateForm
     success_url = reverse_lazy('blog_app:all_posts')
 
     def get_context_data(self, **kwargs):
@@ -41,7 +44,7 @@ class PostCreateView(g.CreateView):
 class PostUpdateView(g.UpdateView):
     model = models.Blog
     template_name = "blog_app/post_create.html"
-    fields = ('title', 'content', 'preview', 'is_published')
+    form_class = f.BlogCreateForm
     success_url = reverse_lazy('blog_app:all_posts')
 
     def get_queryset(self):
@@ -84,7 +87,7 @@ class PostDetailView(g.DeleteView):
     def form_valid(self, form):
         if form.is_valid():
             new_post = form.save()
-            new_post = transcrypter(new_post.title)
+            new_post = transcription(new_post.title)
             print(new_post)
             new_post.save()
         return super().form_valid(form)
