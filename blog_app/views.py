@@ -9,6 +9,8 @@ from blog_app import forms as f
 
 from my_util_files.transcrypter import transcription
 
+from django.contrib.auth import mixins
+
 # Create your views here.
 
 class PostsListView(g.ListView):
@@ -21,7 +23,7 @@ class PostsListView(g.ListView):
         return queryset
 
 
-class PostCreateView(g.CreateView):
+class PostCreateView(mixins.LoginRequiredMixin, g.CreateView):
     model = models.Blog
     template_name = 'blog_app/post_create.html'
     form_class = f.BlogCreateForm
@@ -35,13 +37,15 @@ class PostCreateView(g.CreateView):
     def form_valid(self, form):
         if form.is_valid():
             new_post = form.save()
-            new_post = transcription(new_post.title)
-            print(new_post)
+            new_post.slug = transcription(new_post.title)
             new_post.save()
+
+            w = form.save(commit=False)
+            w.author = self.request.user
         return super().form_valid(form)
     
 
-class PostUpdateView(g.UpdateView):
+class PostUpdateView(mixins.LoginRequiredMixin, g.UpdateView):
     model = models.Blog
     template_name = "blog_app/post_create.html"
     form_class = f.BlogCreateForm
@@ -93,7 +97,7 @@ class PostDetailView(g.DeleteView):
         return super().form_valid(form)
     
 
-class PostDeleteView(g.DeleteView):
+class PostDeleteView(mixins.LoginRequiredMixin, g.DeleteView):
     model = models.Blog
     template_name = "blog_app/post_delete.html"
     context_object_name = 'post_data'
@@ -103,4 +107,3 @@ class PostDeleteView(g.DeleteView):
         queryset = super().get_queryset()
         queryset.filter(pk=self.kwargs["pk"])
         return queryset
-    

@@ -1,4 +1,7 @@
 from django.db import models
+from django.contrib.auth import get_user_model
+
+from user_app.models import User
 
 NULLABLE = {
     "null": True,
@@ -14,9 +17,10 @@ class Product(models.Model):
     image = models.ImageField(upload_to="catalog/media/", **NULLABLE, verbose_name="Изображние")
     category = models.CharField(max_length=20, verbose_name="Категория", **NULLABLE)
     price = models.FloatField(verbose_name="Цена за товар", **NULLABLE)
-    creations_date = models.DateField(verbose_name="Дата создания", auto_created=True)
+    creations_date = models.DateField(verbose_name="Дата создания", auto_created=True, auto_now_add=True)
     last_change_date = models.DateField(verbose_name="Дата последнего изменения", auto_now_add=True)
-    version_of_product = models.ForeignKey(to='Version', blank=True, null=True, on_delete=models.SET_NULL, verbose_name="Версия")
+    version_of_product = models.ForeignKey(to='Version', **NULLABLE, on_delete=models.SET_NULL, verbose_name="Версия")
+    author = models.ForeignKey(to=get_user_model(), **NULLABLE, on_delete=models.SET_NULL)
 
     def __str__(self):
         return f"{self.title} {self.category} {self.price}"

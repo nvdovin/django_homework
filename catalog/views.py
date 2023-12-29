@@ -1,10 +1,12 @@
 from typing import Any
+from django.forms.models import BaseModelForm
 from django.http import HttpRequest, HttpResponse
 from django.urls import reverse_lazy
 from catalog.forms import CreateProduct
 from catalog.models import Product, Version
 from django.views import generic as g
 
+from django.contrib.auth import mixins
 
 # Create your views here.
 
@@ -13,7 +15,7 @@ class HomeListView(g.ListView):
     template_name = "catalog/home.html"    
 
 
-class ContactsCreateView(g.CreateView):
+class ContactsCreateView(mixins.LoginRequiredMixin, g.CreateView):
     model = Product
     template_name = "catalog/contacts.html"
     fields = ()
@@ -36,7 +38,6 @@ class ContactsCreateView(g.CreateView):
         return super().post(request, *args, **kwargs)
 
 
-
 class ProductCardView(g.DetailView):
     model = Product
     template_name = "catalog/product.html"
@@ -56,7 +57,7 @@ class ProductCardView(g.DetailView):
         return queryset
 
 
-class ProductCreateView(g.CreateView):
+class ProductCreateView(mixins.LoginRequiredMixin, g.CreateView):
     model = Product
     template_name = "catalog/product_create.html"
     form_class = CreateProduct
@@ -67,8 +68,13 @@ class ProductCreateView(g.CreateView):
         context['is_edit'] = False
         return context
 
+    def form_valid(self, form):
+        w = form.save(commit=False)
+        w.author = self.request.user
+        return super().form_valid(form)
 
-class ProductUpdateView(g.UpdateView):
+
+class ProductUpdateView(mixins.LoginRequiredMixin, g.UpdateView):
     model = Product
     template_name = "catalog/product_create.html"
     form_class = CreateProduct

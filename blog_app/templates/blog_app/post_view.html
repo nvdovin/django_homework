@@ -13,9 +13,16 @@
             <div align="center"> <h3>{{ post_data.title }}</h3> </div>
         </div>
         <div class="card-body">
+            <div style="font-style: italic; font-size: 5mm;">
+            {% if post_data.author %}
+                <div class="row">{{post_data.author}}</div>
+            {% else %}
+                <div class="row">Автор неизвестен</div>
+            {% endif %}
+            </div>
             
             {% autoescape off %}            
-            <p class="fw-light">{{ post_data.content|paragrapher }}</p>     
+            <div style="font-size: 6mm;">{{ post_data.content|paragrapher }}</div>   
             {% endautoescape %}        
         </div>
     </div>

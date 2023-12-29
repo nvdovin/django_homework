@@ -4,37 +4,11 @@
 {% load mediapath %}
 
 <ul class="nav justify-content-center">
-    <nav class="navbar navbar-expand-lg bg-body-tertiary">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="{% url 'catalog:home' %}">Skystore</a>
-            <button class="navbar-toggler" type="button"
-                data-bs-toggle="collapse"
-                data-bs-target="#navbarSupportedContent"
-                aria-controls="navbarSupportedContent" aria-expanded="false"
-                aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page"
-                            href="{% url 'blog_app:all_posts' %}">Все
-                            записи</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'blog_app:create' %}">Добавить
-                            запись</a>
-                    </li>
-
-                </ul>
-                <form class="d-flex" role="search">
-                    <input class="form-control me-2" type="search"
-                        placeholder="Search" aria-label="Search">
-                    <button class="btn btn-outline-success" type="submit">Поиск</button>
-                </form>
-            </div>
+    {% if user.is_authenticated %}
+        <div style="display: grid; place-items: center;">
+            <a class="nav-link" class="btn btn-success" href="{% url 'blog_app:create' %}">Добавить запись</a>
         </div>
-    </nav>
+    {% endif %}
 </ul>
 
 <h3 align="center">Здоровье в еде!</h3>
@@ -44,18 +18,32 @@
             {% for card in object_list %}
             <div class="col md-3 mb-3">
                 <div class="card" style="width: 20rem; height: 30rem;">
-                    <img src="{% mediapath card.preview %}" style="height: 250px; width: auto;" class="card-img-top"
+                    
+                    {% if card.preview %}
+                        <img src="{% mediapath card.preview %}" style="height: 250px; width: auto;" class="card-img-top"
                         alt="Превью">
+                    {% else %}
+                        <img src="../../../media/without_picture.jpg" style="height: 250px; width: auto;" class="card-img-top"
+                        alt="Превью">
+                    {% endif %}
+                        
+                    
                     <div class="card-body">
                         <h5 class="card-title">{{ card.title }}</h5>
                         <p class="card-text">{{ card.content|truncatechars:60 }}</p>
                         
                     </div>
                     <div style="position: relative; bottom: 10px;">
+                        
+                        {% if user.is_authenticated %}
                             <a href="{% url 'blog_app:view' card.pk %}" class="btn btn-primary">Читать</a>
                             <a href="{% url 'blog_app:edit' card.pk %}"class="btn btn-primary">Изменить</a>
                             <a href="{% url 'blog_app:delete' card.pk %}"class="btn btn-danger">Удалить</a>
-                        </div>
+                        {% else %}
+                            <a href="{% url 'blog_app:view' card.pk %}" class="btn btn-primary">Читать</a>
+                        {% endif %}
+                            
+                    </div>
                 </div>
             </div>
             {% endfor %}

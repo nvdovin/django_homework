@@ -1,4 +1,7 @@
+from django.contrib.auth import get_user_model
 from django.db import models
+
+from catalog.models import NULLABLE
 
 # Create your models here.
 class Blog(models.Model):
@@ -9,6 +12,7 @@ class Blog(models.Model):
     creation_date = models.DateField(auto_now=True, verbose_name="Дата сощдания")
     is_published = models.BooleanField(default=True, verbose_name="Статус публикации")
     views_counter = models.IntegerField(verbose_name="Счетчик просморов", default=0)
+    author = models.ForeignKey(to=get_user_model(), on_delete=models.SET_NULL, **NULLABLE)
     
     def __str__(self) -> str:
         return f"Запись {self.title} с количеством просмотров - {self.views_counter}"

@@ -9,13 +9,15 @@
 
 <div style="position: relative; left: auto;">
     {% for card in querry %}
-    <div class="col-6 text-center">
-        <div class="card">
-            <p>                
-                <h3>{{ card.version_title }}</h3>
-                <br>{{ card.product_name }}
-                <br>{{ card.is_active_version }}
-            </p>
+    <div class="text-center" style="position: relative; left: 25%;">
+        <div class="col-6 text-center mb-4">
+            <div class="card">
+                <p>
+                    <h3>{{ card.version_title }}</h3>
+                    <br>{{ card.product_name }}
+                    <br>{{ card.is_active_version }}
+                </p>
+            </div>
         </div>
     </div>
     {% endfor %}

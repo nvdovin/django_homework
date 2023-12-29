@@ -13,11 +13,24 @@
         {% csrf_token %}
         <div class="mb-2" style="position: relative; left: 3cm;">
         {% for f in form %}
-            <div class="row col-6 text-start mb-3" style="position: relative; left: 9cm;">
-                <div class="col" style="font-size: 6mm;"><label for="{{ f.id_for_label }}">{{ f.label.title }}</label></div>
-                <div class="col">{{f}}</div>
-            </div>
-            <div class="form-error mb-2 text-center"  style="font-size: 6mm; color: brown;">{{ f.errors}}</div>
+        
+        {% if is_edit %}
+        <div class="row col-6 text-start mb-3" style="position: relative; left: 9cm;">
+            <div class="col" style="font-size: 6mm;"><label for="{{ f.id_for_label }}">{{ f.label.title }}</label></div>
+            <div class="col">{{f}}</div>
+        </div>
+        <div class="form-error mb-2 text-center"  style="font-size: 6mm; color: brown;">{{ f.errors}}</div>
+        {% else %}
+        <!-- Условие для того, чтобы поле "Версии появлялось только при редактировании материала" -->
+        {% if f.label != form.version_of_product.label %}
+        <div class="row col-6 text-start mb-3" style="position: relative; left: 9cm;">
+            <div class="col" style="font-size: 6mm;"><label for="{{ f.id_for_label }}">{{ f.label.title }}</label></div>
+            <div class="col">{{f}}</div>
+        </div>
+        <div class="form-error mb-2 text-center"  style="font-size: 6mm; color: brown;">{{ f.errors}}</div>
+        {% endif %}
+            
+        {% endif %}
         {% endfor %}
             
         <div class="m-4">

@@ -14,7 +14,7 @@ class CreateProduct(f.ModelForm):
 
     class Meta:
         model = Product
-        exclude = ("last_change_date", "creations_date")
+        exclude = ("last_change_date", "creations_date", "author")
     
     def clean_title(self):
         stop_words_list = ['казино', 'криптовалюта', 'крипта', 'биржа', 'дешево', 'бесплатно', 'обман', 'полиция', 'радар']

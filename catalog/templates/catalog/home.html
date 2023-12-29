@@ -4,19 +4,26 @@
 <div align="center">
     <div class="container text-center">
         <div class="row mb-4">
-            <div class="col">
-                <a href="{% url 'catalog:create_product' %}" type="button"
-                    class="btn btn-outline-success">Создать продукт</a>
-            </div>
+            {% if user.is_authenticated %}
+                <div class="col">
+                    <a href="{% url 'catalog:create_product' %}" type="button"
+                        class="btn btn-outline-success">Создать продукт</a>
+                </div>
+                <div class="col">
+                    <a href="{% url 'catalog:active_versions' %}" type="button"
+                        class="btn btn-outline-success">Активные версии</a>
+                </div>
+            {% else %}
             <div class="col">
                 <a href="{% url 'catalog:active_versions' %}" type="button"
                     class="btn btn-outline-success">Активные версии</a>
+            {% endif %}
             </div>
         </div>
     </div>
 </div>
 <div class="container">
-    <div class="row text-center">
+    <div class="row text-center" style="position: relative; top: 9mm">
         {% for object in object_list %}
         <div class="col-3">
             <div class="card mb-4 box-shadow">
@@ -28,16 +35,21 @@
                         <h3>RUB</h3></h1>
                     <ul class="list-unstyled mt-3 mb-4 text-start m-3">
                     </ul>
-                    <button class="btn btn-sm btn-outline-secondary"
+                    
+                    {% if user.is_authenticated %}
+                        <button class="btn btn-sm btn-outline-secondary"
                         type="button"><a
                             class="text-black"
-                            href="{% url 'catalog:product' object.pk %}">Купить!</a>
-                    </button>
-                    <button class="btn btn-sm btn-outline-secondary"
-                        type="button"><a
-                            class="text-black"
-                            href="{% url 'catalog:update_product' object.pk %}">Изменить!</a>
-                    </button>
+                            href="{% url 'catalog:product' object.pk %}">Просмотреть</a>
+                        </button>
+                        <button class="btn btn-sm btn-outline-secondary"
+                            type="button"><a
+                                class="text-black"
+                                href="{% url 'catalog:update_product' object.pk %}">Изменить!</a>
+                        </button>
+                    {% endif %}
+                        
+                    
                 </a>
             </div>
         </div>
