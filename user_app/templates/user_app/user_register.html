@@ -25,17 +25,27 @@
             {% if is_active %}            
                 <button type="submit" class="btn btn-outline-success" style="position: relative; top: 1cm;">Зарегистрировать</button>
             {% else %}
+            
+            {% if is_edit %}
                 <div class="row">
                     <div  class="col">
                         <a type="submit" class="btn btn-outline-danger" href="{% url 'user_app:delete_avatar' %}">Удалить автар</a>
                     </div>
                     <div class="col">
                         <a href="{% url 'user_app:reset_password' %}" class="btn btn-outline-danger">Изменить пароль</a></div>
-                    </div>
-                    
+                </div>
                 <div class="row" style="position: relative; left: 43mm; top: 5mm">
                     <button type="submit" class="btn btn-outline-success" >Изменить</button>
                 </div>
+            {% else %}
+                <div class="row" style="position: relative; left: 43mm; top: 5mm">
+                    <button type="submit" class="btn btn-outline-success" >Зарегистрировать</button>
+                </div>
+            {% endif %}
+                
+                
+                    
+                
             {% endif %}
             
                 

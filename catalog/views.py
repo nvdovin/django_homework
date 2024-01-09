@@ -1,7 +1,8 @@
 from typing import Any
 from django.forms.models import BaseModelForm
 from django.http import HttpRequest, HttpResponse
-from django.urls import reverse_lazy
+from django.shortcuts import get_object_or_404, redirect
+from django.urls import reverse, reverse_lazy
 from catalog.forms import CreateProduct
 from catalog.models import Product, Version
 from django.views import generic as g
@@ -12,7 +13,15 @@ from django.contrib.auth import mixins
 
 class HomeListView(g.ListView):
     model = Product
-    template_name = "catalog/home.html"    
+    template_name = "catalog/home.html"
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        if self.request.user.has_perm('catalog.chage_product'):
+            pass
+        else:
+            queryset = queryset.filter(is_published=True)
+        return queryset
 
 
 class ContactsCreateView(mixins.LoginRequiredMixin, g.CreateView):
@@ -74,7 +83,19 @@ class ProductCreateView(mixins.LoginRequiredMixin, g.CreateView):
         return super().form_valid(form)
 
 
-class ProductUpdateView(mixins.LoginRequiredMixin, g.UpdateView):
+class ProductDeleteView(mixins.LoginRequiredMixin, g.DeleteView):
+    model = Product
+    template_name = "catalog/product_delete.html"
+    context_object_name = 'post_data'
+    success_url = reverse_lazy('catalog:home')
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        queryset.filter(pk=self.kwargs["pk"])
+        return queryset
+
+
+class ProductUpdateView(mixins.LoginRequiredMixin, mixins.PermissionRequiredMixin, g.UpdateView):
     model = Product
     template_name = "catalog/product_create.html"
     form_class = CreateProduct
@@ -96,3 +117,13 @@ class ActiveVersionsListView(g.ListView):
         queryset = queryset.filter(is_active_version = True)
         print(queryset)
         return queryset
+
+
+def change_publish_status(request, pk):
+    product = get_object_or_404(Product, pk=pk)
+    if product.is_published == True:
+        product.is_published = False
+    else:
+        product.is_published = True
+    product.save()
+    return redirect(reverse("catalog:home"))

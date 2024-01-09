@@ -1,0 +1,25 @@
+{% extends 'catalog/base.html' %}
+
+
+{% block content %}
+
+<form method="post">{% csrf_token %}
+    <div class="col">
+        <div class="container justify-content-center">
+            <h2 align="center">Вы, действительно, хотите удалить запись?</h2>
+            <div align="center"><h5>{{ post_data.title }}</h5></div>
+            <h1> </h1>
+        </div>
+    </div>
+    {{ form }}
+    <div class="container text-center">
+        <div class="row justify-content-center">
+            <input type="submit" class="btn btn-outline-danger"
+                value="Подтвердить">
+            <a type="button" class="btn btn-outline-success"
+                href="{% url 'catalog:home' %}">Отменить</a>
+        </div>
+    </div>
+</form>
+
+{% endblock content %}

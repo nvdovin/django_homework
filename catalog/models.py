@@ -21,6 +21,7 @@ class Product(models.Model):
     last_change_date = models.DateField(verbose_name="Дата последнего изменения", auto_now_add=True)
     version_of_product = models.ForeignKey(to='Version', **NULLABLE, on_delete=models.SET_NULL, verbose_name="Версия")
     author = models.ForeignKey(to=get_user_model(), **NULLABLE, on_delete=models.SET_NULL)
+    is_published = models.BooleanField(verbose_name="Опубликовано ли?", default=True)
 
     def __str__(self):
         return f"{self.title} {self.category} {self.price}"

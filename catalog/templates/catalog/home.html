@@ -37,16 +37,37 @@
                     </ul>
                     
                     {% if user.is_authenticated %}
-                        <button class="btn btn-sm btn-outline-secondary"
-                        type="button"><a
-                            class="text-black"
-                            href="{% url 'catalog:product' object.pk %}">Просмотреть</a>
+                        <button class="btn btn-sm btn-outline-secondary" type="button">
+                            <a class="text-black" href="{% url 'catalog:product' object.pk %}">Просмотреть</a>
                         </button>
-                        <button class="btn btn-sm btn-outline-secondary"
-                            type="button"><a
-                                class="text-black"
-                                href="{% url 'catalog:update_product' object.pk %}">Изменить!</a>
-                        </button>
+                        
+                        {% if perms.catalog.change_product %}
+                            <button class="btn btn-sm btn-outline-secondary" type="button">
+                                <a class="text-black" href="{% url 'catalog:update_product' object.pk %}">Изменить!</a>
+                            </button>
+                        {% endif %}
+                            
+                        
+                        
+                        {% if perms.catalog.change_product or object.author == user.email%}                            
+                            {% if object.is_published %}
+                                <div class="col" style="width: auto; position: relative; top: 5px;">
+                                    <button class="btn btn-sm btn-outline-danger" type="button">
+                                        <a class="text-black" href="{% url 'catalog:change_publish_status' object.pk %}">Снять с публикации</a>
+                                    </button>
+                                </div>
+                            {% else %}
+                                <div class="col" style="width: auto; position: relative; top: 5px;">
+                                    <button class="btn btn-sm btn-outline-danger" type="button">
+                                        <a class="text-black" href="{% url 'catalog:change_publish_status' object.pk %}">Вернуть в публикацию</a>
+                                    </button>
+                                </div>
+                            {% endif %}
+                                
+                        </div>
+                        {% endif %}
+                            
+                        
                     {% endif %}
                         
                     

@@ -6,7 +6,6 @@ from django.utils.timezone import now
 # Create your models here.
 
 class User(AbstractUser):
-    username = None
     email = models.CharField(verbose_name='', unique=True)
     avatar = models.ImageField(verbose_name='Аватарка', upload_to='media/users', blank=True, null=True)
     birthday = models.DateTimeField(verbose_name='Дата рождения', null=True, blank=True, default=None)
