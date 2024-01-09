@@ -3,7 +3,7 @@ from django.forms.models import BaseModelForm
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse, reverse_lazy
-from catalog.forms import CreateProduct
+from catalog.forms import CreateProduct, ModeratorUpdateProduct
 from catalog.models import Product, Version
 from django.views import generic as g
 
@@ -17,7 +17,12 @@ class HomeListView(g.ListView):
 
     def get_queryset(self):
         queryset = super().get_queryset()
-        if self.request.user.has_perm('catalog.chage_product'):
+        user = self.request.user
+        if user.is_authenticated:
+            if user.is_superuser or user.is_staff:
+                pass
+            else:
+                queryset = queryset.filter(is_published=True) | queryset.filter(author=user)
             pass
         else:
             queryset = queryset.filter(is_published=True)
@@ -95,7 +100,7 @@ class ProductDeleteView(mixins.LoginRequiredMixin, g.DeleteView):
         return queryset
 
 
-class ProductUpdateView(mixins.LoginRequiredMixin, mixins.PermissionRequiredMixin, g.UpdateView):
+class ProductUpdateView(mixins.LoginRequiredMixin, g.UpdateView):
     model = Product
     template_name = "catalog/product_create.html"
     form_class = CreateProduct
@@ -127,3 +132,11 @@ def change_publish_status(request, pk):
         product.is_published = True
     product.save()
     return redirect(reverse("catalog:home"))
+
+
+class ModeratorUpdateProduct(mixins.LoginRequiredMixin, mixins.PermissionRequiredMixin, g.UpdateView):
+    model = Product
+    template_name = 'catalog/moderator_update_product.html'
+    success_url = reverse_lazy('catalog:home')
+    form_class = ModeratorUpdateProduct
+    permission_required = 'catalog.change_product'

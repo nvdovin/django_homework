@@ -17,6 +17,7 @@ urlpatterns = [
         path('active_versions', v.ActiveVersionsListView.as_view(), name='active_versions'),
         path('delete_product_<int:pk>/', v.ProductDeleteView.as_view(), name='delete_product'),
         path('change_publish_status_<int:pk>/', v.change_publish_status, name='change_publish_status'),
+        path('moderator_update_product_<int:pk>/', v.ModeratorUpdateProduct.as_view(), name="moderator_update_product"),
     ]
 
 if settings.DEBUG:
