@@ -37,8 +37,19 @@
                         
                         {% if user.is_authenticated %}
                             <a href="{% url 'blog_app:view' card.pk %}" class="btn btn-primary">Читать</a>
-                            <a href="{% url 'blog_app:edit' card.pk %}"class="btn btn-primary">Изменить</a>
-                            <a href="{% url 'blog_app:delete' card.pk %}"class="btn btn-danger">Удалить</a>
+                            
+                            {% if card.author|stringformat:"s" == user.email|stringformat:"s" %}
+                                <a href="{% url 'blog_app:edit' card.pk %}"class="btn btn-primary">Изменить</a>
+                                <a href="{% url 'blog_app:delete' card.pk %}"class="btn btn-danger">Удалить</a>
+                            {% elif perms.blog_app.change_blog %}
+                                {% if card.is_published %}
+                                    <a href="{% url 'blog_app:change_publish_status' card.pk %}"class="btn btn-primary">Снять с публикации</a>
+                                {% else %}
+                                    <a href="{% url 'blog_app:change_publish_status' card.pk %}"class="btn btn-primary">Вернуть в публикацию</a>
+                                {% endif %}
+                            {% endif %}
+                                
+                            
                         {% else %}
                             <a href="{% url 'blog_app:view' card.pk %}" class="btn btn-primary">Читать</a>
                         {% endif %}

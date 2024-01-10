@@ -5,7 +5,7 @@
 {% load mediapath %}
 {% load static %}
 
-<div style="position: relative; left: 19cm;">
+<div style="display: grid; place-items: center;">
     <div>       
 
         {% if user.avatar %}
@@ -17,6 +17,7 @@
     <h1 style="position: relative; top: 1cm;">Профиль пользователя </h1>
     <div class="col-6" style="display: grid; place-items: left; position: relative; top: 1cm">
         <div class="row" style="font-size: 7mm;">{{ user.first_name }} {{ user.last_name }}</div>
+        <div class="row" style="font-size: 7mm;">{{ user.email }}</div>
         <div class="row" style="font-size: 7mm;">{{ user.birthday }}</div>
         <div class="row" style="font-size: 7mm;">{{ user.phone_number }}</div>
         <div class="row" style="font-size: 7mm;">{{ user.country }}</div>

@@ -1,6 +1,6 @@
 from typing import Any
 from django.db import models
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse, reverse_lazy
 from django.views import generic as g
 
@@ -19,7 +19,14 @@ class PostsListView(g.ListView):
 
     def get_queryset(self):
         queryset = super().get_queryset()
-        queryset = queryset.filter(is_published=True).order_by('views_counter').reverse()
+        user = self.request.user
+        if user.is_authenticated:
+            if user.is_staff or user.is_superuser or user.has_perm('blog_app.change_blog'):
+                pass
+            else:
+                queryset = queryset.filter(is_published=True).order_by('views_counter').reverse() | queryset.filter(author=user).order_by('views_counter').reverse()
+        else:
+            queryset = queryset.filter(is_published=True).order_by('views_counter').reverse()
         return queryset
 
 
@@ -87,7 +94,7 @@ class PostDetailView(g.DeleteView):
         self.object.views_counter += 1
         self.object.save()
         return self.object
-    
+
     def form_valid(self, form):
         if form.is_valid():
             new_post = form.save()
@@ -95,15 +102,26 @@ class PostDetailView(g.DeleteView):
             print(new_post)
             new_post.save()
         return super().form_valid(form)
-    
+
 
 class PostDeleteView(mixins.LoginRequiredMixin, g.DeleteView):
     model = models.Blog
     template_name = "blog_app/post_delete.html"
     context_object_name = 'post_data'
     success_url = reverse_lazy('blog_app:all_posts')
-    
+
     def get_queryset(self):
         queryset = super().get_queryset()
         queryset.filter(pk=self.kwargs["pk"])
         return queryset
+
+
+def change_publish_status(requesr, pk):
+    blog = get_object_or_404(models.Blog, pk=pk)    
+    if blog.is_published == True:
+        blog.is_published = False
+    else:
+        blog.is_published = False
+    blog.save()
+    return redirect(reverse('blog_app:all_posts'))
+

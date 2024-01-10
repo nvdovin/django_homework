@@ -11,5 +11,7 @@ urlpatterns = [
     path('<int:pk>/view/', v.PostDetailView.as_view() , name='view'),
     path('<int:pk>/edit/', v.PostUpdateView.as_view(), name='edit'),
     path('<int:pk>/delete/', v.PostDeleteView.as_view() , name='delete'),
+    path('<int:pk>/change_publish_status/', v.change_publish_status, name='change_publish_status'),
+
 
 ]
