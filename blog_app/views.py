@@ -10,6 +10,7 @@ from blog_app import forms as f
 from my_util_files.transcrypter import transcription
 
 from django.contrib.auth import mixins
+from django.contrib.auth import decorators as d
 
 # Create your views here.
 
@@ -116,6 +117,7 @@ class PostDeleteView(mixins.LoginRequiredMixin, g.DeleteView):
         return queryset
 
 
+@d.permission_required('blog_app.change_blog')
 def change_publish_status(requesr, pk):
     blog = get_object_or_404(models.Blog, pk=pk)    
     if blog.is_published == True:

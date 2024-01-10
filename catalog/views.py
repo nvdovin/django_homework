@@ -125,7 +125,7 @@ class ActiveVersionsListView(g.ListView):
         return queryset
 
 
-@d.permission_required('blog_app.change_blog')
+@d.permission_required('catalog.change_product')
 def change_publish_status(request, pk):
     product = get_object_or_404(Product, pk=pk)
     if product.is_published == True:
