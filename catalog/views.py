@@ -8,6 +8,7 @@ from catalog.models import Product, Version
 from django.views import generic as g
 
 from django.contrib.auth import mixins
+from django.contrib.auth import decorators as d
 
 # Create your views here.
 
@@ -124,6 +125,7 @@ class ActiveVersionsListView(g.ListView):
         return queryset
 
 
+@d.permission_required('blog_app.change_blog')
 def change_publish_status(request, pk):
     product = get_object_or_404(Product, pk=pk)
     if product.is_published == True:

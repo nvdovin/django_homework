@@ -121,7 +121,7 @@ def change_publish_status(requesr, pk):
     if blog.is_published == True:
         blog.is_published = False
     else:
-        blog.is_published = False
+        blog.is_published = True
     blog.save()
     return redirect(reverse('blog_app:all_posts'))
 
