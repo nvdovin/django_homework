@@ -45,11 +45,6 @@ class ContactsCreateView(mixins.LoginRequiredMixin, g.CreateView):
         name_from_form = request.POST.get("name")
         email_from_form = request.POST.get("email")
         message_from_form = request.POST.get("massage")
-        print(f"""
-Имя: {name_from_form};
-Электронная почта: {email_from_form};
-Сообщение от пользователя: {message_from_form}
-""")
         return super().post(request, *args, **kwargs)
 
 
