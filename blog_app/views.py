@@ -117,7 +117,7 @@ class PostDeleteView(mixins.LoginRequiredMixin, g.DeleteView):
         return queryset
 
 
-@d.permission_required('blog_app.change_blog')
+@d.permission_required('blog_app.publish_change_blog')
 def change_publish_status(requesr, pk):
     blog = get_object_or_404(models.Blog, pk=pk)    
     if blog.is_published == True:
