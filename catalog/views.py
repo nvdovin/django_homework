@@ -9,6 +9,7 @@ from django.views import generic as g
 
 from django.contrib.auth import mixins
 from django.contrib.auth import decorators as d
+from django.views.decorators.cache import cache_page
 
 # Create your views here.
 

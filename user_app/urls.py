@@ -3,6 +3,8 @@ from django.urls import path, include
 from django.contrib.auth.views import LogoutView
 from django.views.generic import DetailView, View
 from user_app import views as v
+from django.views.decorators.cache import cache_page
+
 
 app_name = 'user_app'
 
@@ -14,6 +16,6 @@ urlpatterns = [
     path('reset_password/', v.reset_password, name='reset_password'),
     path('delete_avatar/', v.delete_avatar, name='delete_avatar'),
     path('update_user/', v.UpdateProfileView.as_view(), name='update_user'),
-    path('profile_view/', v.ProfileView.as_view(), name='profile_view'),
+    path('profile_view/', cache_page(60*15)(v.ProfileView.as_view()), name='profile_view'),
 
 ]

@@ -1,6 +1,7 @@
 from typing import Any
 from django import forms as f
-from catalog.models import Category, Product, Version
+from .models import Product, Version
+from .services import get_categories_queryset
 
 
 class CreateProduct(f.ModelForm):
@@ -10,7 +11,7 @@ class CreateProduct(f.ModelForm):
     category = f.ModelChoiceField(label='Категория', 
                                     required=False, 
                                     widget=f.Select(attrs={'class': 'my-same-widht'}),
-                                    queryset=Category.objects.all()
+                                    queryset=get_categories_queryset('Category')
                                     )
     price = f.FloatField(label='Цена за товар', required=False, widget=f.NumberInput(attrs={'class': 'my-same-widht'}))
     version_of_product = f.ModelChoiceField(label='Версия', queryset=Version.objects.all(),
@@ -33,7 +34,7 @@ class ModeratorUpdateProduct(f.ModelForm):
     category = f.ModelChoiceField(label='Категория', 
                                     required=False, 
                                     widget=f.Select(attrs={'class': 'my-same-widht'}),
-                                    queryset=Category.objects.all()
+                                    queryset=get_categories_queryset('Category')
                                     )
 
     class Meta:
